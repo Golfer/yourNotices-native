@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { ScrollView, TouchableWithoutFeedback } from 'react-native'
+import { ScrollView, TouchableWithoutFeedback, Linking } from 'react-native'
 import { View, Text, ListItem } from 'react-native-elements';
 import IconEntypo from 'react-native-vector-icons/Entypo'
 import { getAboutGod } from '../../../actions'
@@ -24,17 +24,31 @@ class AboutGod extends Component {
   }
 
   listItemSubtitle(item){
-    if (item.attributes["data-uk"] === "" && item.attributes["data-ru"] === ""){
-      console.log('ITeM', item)
-      console.log('ITeM Attributes ', item.attributes)
-      return `- ${item.type} - ${item.attributes["original-link"]}`
-    } else{
+    if (item.attributes["title-original-link-uk"] != "") {
+      return `UK - ${item.type} - ${item.attributes["title-original-link-uk"]}`
+    } else if (item.attributes["title-original-link-ru"] != "") {
+      return `RU - ${item.type} - ${item.attributes["title-original-link-ru"]}`
+    } else {
       return null
     }
   }
 
   handleScroll(el){
     console.log('handleScroll', el)
+  }
+
+  __OnPress(item){
+    let itemData = this.item
+
+    let uri = itemData.attributes["original-link"]
+
+    return Linking.canOpenURL(uri).then(supported => {
+      if (!supported) {
+        console.log('Can\'t handle url: ' + uri);
+      } else {
+        Linking.openURL(uri);
+      }
+    }).catch(err => console.error('An error occurred', err));
   }
 
   _renderlistAboutGod(){
@@ -52,6 +66,7 @@ class AboutGod extends Component {
             borderBottomWidth: 1,
             marginTop: 1
           }}
+          onPress={this.__OnPress.bind({item})}
         />
        </TouchableWithoutFeedback>
     ));

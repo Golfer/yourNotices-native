@@ -60,11 +60,11 @@ const listNegative = [
     screenName: 'negativeTatiesScreen',
     apiEndPoint: 'taties'
   },
-  {
-    name: 'Yogas',
-    screenName: 'negativeYogasScreen',
-    apiEndPoint: 'yogas'
-  },
+  // {
+  //   name: 'Yogas',
+  //   screenName: 'negativeYogasScreen',
+  //   apiEndPoint: 'yogas'
+  // },
   {
     name: 'Halloweens',
     screenName: 'negativeHalloweensScreen',
