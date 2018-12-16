@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {
   View,
-  Text
+  Text,
+  TouchableHighlight
 } from 'react-native';
 
 import TouchableScale from 'react-native-touchable-scale';
@@ -10,43 +11,30 @@ import { Button, ListItem } from 'react-native-elements';
 
 import HeaderBlock from './../components/shared/header';
 
-const listNegative = [
-  {
-    name: 'Symvols',
-    screenName: 'negativeSymvolsScreen',
-    apiEndPoint: 'symvols'
-  }
-]
-
-
 class NegativeScreen extends Component {
+
+  goToNextScreen = (apiEndPoint) => {
+    return this.props.navigation.navigate('Detail', {endPoint: apiEndPoint})
+  }
+
   render() {
     return (
       <View>
-        <HeaderBlock/>
-        <Text>NegativeScreen</Text>
+        <HeaderBlock navigation={this.props.navigation}/>
         {
-          listNegative.map((l, i) => (
-            <ListItem
-              component={TouchableScale}
-              friction={90}
-              tension={100}
-              activeScale={0.95}
-
-              linearGradientProps={{
-                colors: ['#FF9800', '#F44336', '#F44336', '#F44336', '#F44336'],
-                start: [1, 0],
-                end: [0.2, 0],
-              }}
-              ViewComponent={LinearGradient}
-              chevronColor="white"
-              chevron
-              titleStyle={{ color: 'blue', fontWeight: 'bold' }}
-              key={i}
-              title={l.name}
-              leftAvatar={{ source: { uri: l.avatarUrl } }}
-              subtitle={l.screenName}
-            />
+          listNegative.map((item, key) => (
+            <TouchableHighlight key={key} onPress={() => this.goToNextScreen(item.apiEndPoint)}>
+              <ListItem
+                key={key}
+                title={item.name}
+                rightIcon={{name: 'menu'}}
+                containerStyle={{
+                  borderColor: "#D3D5D8",
+                  borderBottomWidth: 1,
+                  marginTop: 10
+                }}
+              />
+            </TouchableHighlight>
           ))
         }
       </View>
@@ -55,3 +43,31 @@ class NegativeScreen extends Component {
 }
 
 export default NegativeScreen
+
+const listNegative = [
+  {
+    name: 'Symvols',
+    screenName: 'negativeSymvolsScreen',
+    apiEndPoint: 'symvols'
+  },
+  {
+    name: 'Aborts',
+    screenName: 'negativeAbortsScreen',
+    apiEndPoint: 'aborts'
+  },
+  {
+    name: 'Taties',
+    screenName: 'negativeTatiesScreen',
+    apiEndPoint: 'taties'
+  },
+  {
+    name: 'Yogas',
+    screenName: 'negativeYogasScreen',
+    apiEndPoint: 'yogas'
+  },
+  {
+    name: 'Halloweens',
+    screenName: 'negativeHalloweensScreen',
+    apiEndPoint: 'halloweens'
+  }
+]

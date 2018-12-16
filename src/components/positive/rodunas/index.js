@@ -1,134 +1,74 @@
-// https://yournotices.herokuapp.com/api/v1/positive/rodunas
+import React, {Component} from 'react'
+import { connect } from 'react-redux'
+import { ScrollView, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, ListItem } from 'react-native-elements';
+import IconEntypo from 'react-native-vector-icons/Entypo'
+import { getRodunas } from '../../../actions'
 
+class Rodunas extends Component {
 
+  componentDidMount(){
+    this.props.getRodunas();
+  }
 
-import React from 'react';
-import {FlatList, ActivityIndicator, Text, View, StyleSheet} from 'react-native';
-
-export default class RodunasIndex extends React.Component {
-
-    constructor(props){
-        super(props);
-        this.state ={ isLoading: true}
+  listItemTitle(item){
+    if (item.attributes["data-uk"] != ""){
+      return `UK - ${item.type} - ${item.attributes["data-uk"]}`
+    } else if (item.attributes["data-ru"] != ""){
+      return `RU - ${item.type} - ${item.attributes["data-ru"]}`
+    } else {
+      console.log('ITeM', item)
+      console.log('ITeM Attributes ', item.attributes)
+      return null
     }
+  }
 
-    componentDidMount(){
-        return fetch('https://forsoul.herokuapp.com/api/needs/psalms')
-            .then((response) => response.json())
-            .then((responseJson) => {
-
-                this.setState({
-                    isLoading: false,
-                    dataSource: responseJson,
-                    // dataSource: responseJson.movies,
-                }, function(){
-
-                });
-
-            })
-            .catch((error) =>{
-                console.error(error);
-            });
+  listItemSubtitle(item){
+    if (item.attributes["data-uk"] === "" && item.attributes["data-ru"] === ""){
+      console.log('ITeM', item)
+      console.log('ITeM Attributes ', item.attributes)
+      return `- ${item.type} - ${item.attributes["original-link"]}`
+    } else{
+      return null
     }
+  }
 
+  handleScroll(el){
+    console.log('handleScroll', el)
+  }
 
+  _renderlistRodunas(){
 
-    render(){
+    let listData = this.props.rodunas
+    return listData.map((item, key) => (
+      <TouchableWithoutFeedback key={key}>
+        <ListItem
+          key={key}
+          title={this.listItemTitle(item)}
+          subtitle={this.listItemSubtitle(item)}
+          leftIcon={<IconEntypo name={'chevron-small-right'} size={30} color="#4F8EF7"/>}
+          containerStyle={{
+            borderColor: "#D3D5D8",
+            borderBottomWidth: 1,
+            marginTop: 1
+          }}
+        />
+      </TouchableWithoutFeedback>
+    ));
+  }
 
-        if(this.state.isLoading){
-            return(
-                <View style={{flex: 1, padding: 20}}>
-                    <ActivityIndicator/>
-                </View>
-            )
-        }
-        // return(<div>
-        //     {JSON.stringify(this.state.dataSource)}
-        // </div>);
-        return(
-            <View style={{flex: 1, paddingTop:20}}>
-                {/*<FlatList*/}
-                    {/*data={this.state.dataSource}*/}
-                    {/*renderItem={({item}) => <Text style={styles.itemLiSlug}>{item.name_ua}</Text>}*/}
-                    {/*keyExtractor={({id}, index) => id}*/}
-                {/*/>*/}
-                {/*<FlatList*/}
-                    {/*data={this.state.dataSource}*/}
-                    {/*renderItem={({item}) => <Text>{item.title}, {item.releaseYear}</Text>}*/}
-                    {/*keyExtractor={({id}, index) => id}*/}
-                {/*/>*/}
-            </View>
-        );
-    }
+  render() {
+    return(
+      <ScrollView>
+        {this.props.rodunas.length > 0 && this._renderlistRodunas()}
+      </ScrollView>
+    )
+  }
 }
 
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    },
-    itemLiSlug: {
-        fontSize: 16,
-        textAlign: 'center',
-        margin: 10,
-    },
-});
-
-// ----
-
-
-
-
-// import React from 'react';
-// import { TextInput, View, StyleSheet } from 'react-native';
-//
-// export default class RodunasIndex extends React.Component {
-//     constructor(props){
-//         super(props);
-//         this.state ={ isLoading: true}
-//     }
-//
-//
-//     render() {
-//         return (
-//             <View style={styles.container}>
-//                 <TextInput
-//                     autoCorrect={false}
-//                     placeholder={this.props.placeholder}
-//                     placeholderTextColor="white"
-//                     underlineColorAndroid="transparent"
-//                     style={styles.textInput}
-//                     clearButtonMode="always"
-//                 />
-//             </View>
-//         );
-//     }
-// }
-//
-// const styles = StyleSheet.create({
-//     container: {
-//         height: 40,
-//         marginTop: 20,
-//         backgroundColor: '#666',
-//         marginHorizontal: 40,
-//         paddingHorizontal: 10,
-//         borderRadius: 5,
-//     },
-//     textInput: {
-//         flex: 1,
-//         color: 'white',
-//     },
-// });
-// class RodunasIndex extends Component {
-//
-//     render() {
-//         return(<View>
-            {/*<Text>Test Rodunas index</Text>*/}
-        // </View>)
-    // }
-// }
-//
-// export default RodunasIndex;
+function mapStateToProps(state) {
+  return {
+    rodunas: state.rodunas
+  }
+}
+export default connect(mapStateToProps, {getRodunas})(Rodunas)

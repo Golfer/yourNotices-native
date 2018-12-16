@@ -3,12 +3,11 @@ import { connect } from 'react-redux'
 import { ScrollView, TouchableWithoutFeedback } from 'react-native'
 import { View, Text, ListItem } from 'react-native-elements';
 import IconEntypo from 'react-native-vector-icons/Entypo'
-import { getBibles } from '../../../actions'
-
-class Bibles extends Component {
+import { getKatekhyzms } from '../../../actions'
+class Katekhyzms extends Component {
 
   componentDidMount(){
-    this.props.getBibles();
+    this.props.getKatekhyzms();
   }
 
   listItemTitle(item){
@@ -37,9 +36,9 @@ class Bibles extends Component {
     console.log('handleScroll', el)
   }
 
-  _renderlistBibles(){
+  _renderlistKatekhyzms(){
 
-    let listData = this.props.bibles
+    let listData = this.props.katekhyzms
     return listData.map((item, key) => (
       <TouchableWithoutFeedback key={key}>
         <ListItem
@@ -60,7 +59,7 @@ class Bibles extends Component {
   render() {
     return(
       <ScrollView>
-        {this.props.bibles.length > 0 && this._renderlistBibles()}
+        {this.props.katekhyzms.length > 0 && this._renderlistKatekhyzms()}
       </ScrollView>
     )
   }
@@ -68,7 +67,7 @@ class Bibles extends Component {
 
 function mapStateToProps(state) {
   return {
-    bibles: state.bibles
+    katekhyzms: state.katekhyzms
   }
 }
-export default connect(mapStateToProps, {getBibles})(Bibles)
+export default connect(mapStateToProps, {getKatekhyzms})(Katekhyzms)

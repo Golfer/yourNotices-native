@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 import { ScrollView, TouchableWithoutFeedback } from 'react-native'
 import { View, Text, ListItem } from 'react-native-elements';
 import IconEntypo from 'react-native-vector-icons/Entypo'
-import { getBibles } from '../../../actions'
+import { getHalloweens } from '../../../actions'
 
-class Bibles extends Component {
+class Halloweens extends Component {
 
   componentDidMount(){
-    this.props.getBibles();
+    this.props.getHalloweens();
   }
 
   listItemTitle(item){
@@ -37,9 +37,9 @@ class Bibles extends Component {
     console.log('handleScroll', el)
   }
 
-  _renderlistBibles(){
+  _renderlistHalloweens(){
 
-    let listData = this.props.bibles
+    let listData = this.props.halloweens
     return listData.map((item, key) => (
       <TouchableWithoutFeedback key={key}>
         <ListItem
@@ -53,14 +53,14 @@ class Bibles extends Component {
             marginTop: 1
           }}
         />
-      </TouchableWithoutFeedback>
+       </TouchableWithoutFeedback>
     ));
   }
 
   render() {
     return(
       <ScrollView>
-        {this.props.bibles.length > 0 && this._renderlistBibles()}
+        {this.props.halloweens.length > 0 && this._renderlistHalloweens()}
       </ScrollView>
     )
   }
@@ -68,7 +68,7 @@ class Bibles extends Component {
 
 function mapStateToProps(state) {
   return {
-    bibles: state.bibles
+    halloweens: state.halloweens
   }
 }
-export default connect(mapStateToProps, {getBibles})(Bibles)
+export default connect(mapStateToProps, {getHalloweens})(Halloweens)

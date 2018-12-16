@@ -1,82 +1,34 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  // Button,
-} from 'react-native';
-
+import { StyleSheet, View, Text, BackHandler, TouchableHighlight } from 'react-native';
+import HeaderBlock from './../components/shared/header';
+import { NavigationActions } from "react-navigation";
+import { ListItem } from 'react-native-elements';
 import TouchableScale from 'react-native-touchable-scale';
 import LinearGradient from 'react-native-linear-gradient';
-import { Button, ListItem } from 'react-native-elements';
-
-import HeaderBlock from './../components/shared/header';
-import Icon from 'react-native-vector-icons/FontAwesome';
-
-const listPositive = [
-  {
-    name: 'Roduna',
-    screenName: 'positiveRodunasScreen',
-    apiEndPoint: 'rodunas',
-    // avatarUrl: 'https://cdn.pixabay.com/photo/2017/05/15/23/33/family-icon-2316421_960_720.png'
-  },
-  {
-    name: 'Bible',
-    screenName: 'positiveBiblesScreen',
-    apiEndPoint: 'bibles',
-    // avatarUrl: 'https://cdn.pixabay.com/photo/2017/05/15/23/33/family-icon-2316421_960_720.png'
-  },
-  {
-    name: 'Katekhyzms',
-    screenName: 'positiveKatekhyzmsScreen',
-    apiEndPoint: 'katekhyzms',
-    // avatarUrl: 'https://cdn.pixabay.com/photo/2017/05/15/23/33/family-icon-2316421_960_720.png'
-  },
-  {
-    name: 'Religion Notices',
-    screenName: 'positiveReligionNoticesScreen',
-    apiEndPoint: 'religion-notices',
-    // avatarUrl: 'https://cdn.pixabay.com/photo/2017/05/15/23/33/family-icon-2316421_960_720.png'
-  },
-  {
-    name: 'About God',
-    screenName: 'positiveAboutGodsScreen',
-    apiEndPoint: 'about-gods',
-    // avatarUrl: 'https://cdn.pixabay.com/photo/2017/05/15/23/33/family-icon-2316421_960_720.png'
-  },
-]
 
 class PositiveScreen extends Component {
+  goToNextScreen = (apiEndPoint) => {
+    return this.props.navigation.navigate('Detail', {endPoint: apiEndPoint})
+  }
+
   render() {
     return (
       <View>
-        <HeaderBlock/>
-        {/*<Button*/}
-          {/*title="Go to Dashboard"*/}
-          {/*onPress={() => this.props.navigation.navigate('Dashboard')}*/}
-        {/*/>*/}
-        <Text>PositiveScreen</Text>
+        <HeaderBlock navigation={this.props.navigation}/>
         {
-          listPositive.map((l, i) => (
-            <ListItem
-              component={TouchableScale}
-              friction={90}
-              tension={100}
-              activeScale={0.95}
-
-              linearGradientProps={{
-                colors: ['#FF9800', '#F44336', '#F44336', '#F44336', '#F44336'],
-                start: [1, 0],
-                end: [0.2, 0],
-              }}
-              ViewComponent={LinearGradient}
-              chevronColor="white"
-              chevron
-              titleStyle={{ color: 'blue', fontWeight: 'bold' }}
-              key={i}
-              title={l.name}
-              leftAvatar={{ source: { uri: l.avatarUrl } }}
-              subtitle={l.screenName}
-            />
+          listPositiveData.map((item, key) => (
+            <TouchableHighlight key={key} onPress={() => this.goToNextScreen(item.apiEndPoint)}>
+              <ListItem
+                key={key}
+                title={item.name}
+                rightIcon={{name: 'menu'}}
+                containerStyle={{
+                  borderColor: "#D3D5D8",
+                  borderBottomWidth: 1,
+                  marginTop: 1
+                }}
+              />
+            </TouchableHighlight>
           ))
         }
       </View>
@@ -84,4 +36,56 @@ class PositiveScreen extends Component {
   }
 }
 
-export default PositiveScreen
+export default PositiveScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  itemLiActiveElement: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    margin: 10,
+    color: 'red',
+  },
+  itemLiElement: {
+    color: 'green',
+  },
+});
+
+const listPositiveData = [
+  {
+    name: 'Religion Notices',
+    screenName: 'positiveReligionNoticesScreen',
+    apiEndPoint: 'religion-notices',
+    icon: 'menu',
+  },
+  {
+    name: 'Roduna',
+    screenName: 'positiveRodunasScreen',
+    apiEndPoint: 'rodunas',
+    icon: 'menu',
+  },
+  {
+    name: 'Bible',
+    screenName: 'positiveBiblesScreen',
+    apiEndPoint: 'bibles',
+    icon: 'menu',
+  },
+  {
+    name: 'Katekhyzms',
+    screenName: 'positiveKatekhyzmsScreen',
+    apiEndPoint: 'katekhyzms',
+    icon: 'menu',
+  },
+  {
+    name: 'About God',
+    screenName: 'positiveAboutGodsScreen',
+    apiEndPoint: 'about-gods',
+    icon: 'menu',
+  },
+];
