@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { ScrollView, TouchableWithoutFeedback, Linking } from 'react-native'
+import { ScrollView, TouchableWithoutFeedback, Linking, ActivityIndicator } from 'react-native'
 import { View, Text, ListItem } from 'react-native-elements';
 import IconEntypo from 'react-native-vector-icons/Entypo'
 import { getYogas } from '../../../actions'
@@ -75,7 +75,7 @@ class Yogas extends Component {
   render() {
     return(
       <ScrollView>
-        {this.props.yogas.length > 0 && this._renderlistYogas()}
+        {this.props.yogas.length > 0 ? this._renderlistYogas() : <ActivityIndicator size="large" color="#0000ff" />}
       </ScrollView>
     )
   }

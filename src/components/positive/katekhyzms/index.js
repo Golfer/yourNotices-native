@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { ScrollView, TouchableWithoutFeedback, Linking } from 'react-native'
+import { ScrollView, TouchableWithoutFeedback, Linking, ActivityIndicator } from 'react-native'
 import { View, Text, ListItem } from 'react-native-elements';
 import IconEntypo from 'react-native-vector-icons/Entypo'
 import { getKatekhyzms } from '../../../actions'
@@ -74,7 +74,7 @@ class Katekhyzms extends Component {
   render() {
     return(
       <ScrollView>
-        {this.props.katekhyzms.length > 0 && this._renderlistKatekhyzms()}
+        {this.props.katekhyzms.length > 0 ? this._renderlistKatekhyzms() : <ActivityIndicator size="large" color="#0000ff" />}
       </ScrollView>
     )
   }

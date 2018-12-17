@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { ScrollView, TouchableWithoutFeedback, Linking } from 'react-native'
+import { ScrollView, TouchableWithoutFeedback, Linking, ActivityIndicator } from 'react-native'
 import { View, Text, ListItem } from 'react-native-elements';
 import IconEntypo from 'react-native-vector-icons/Entypo'
 import { getRodunas } from '../../../actions'
@@ -75,7 +75,7 @@ class Rodunas extends Component {
   render() {
     return(
       <ScrollView>
-        {this.props.rodunas.length > 0 && this._renderlistRodunas()}
+        {this.props.rodunas.length > 0 ? this._renderlistRodunas() : <ActivityIndicator size="large" color="#0000ff" />}
       </ScrollView>
     )
   }

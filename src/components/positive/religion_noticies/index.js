@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { ScrollView, TouchableWithoutFeedback, Linking } from 'react-native'
+import { ScrollView, TouchableWithoutFeedback, Linking, ActivityIndicator } from 'react-native'
 import { View, Text, ListItem } from 'react-native-elements';
 import IconEntypo from 'react-native-vector-icons/Entypo'
 import { getReligionNotices } from '../../../actions'
@@ -78,7 +78,7 @@ class ReligionNotices extends Component {
     render() {
         return(
           <ScrollView>
-            {this.props.religionNotices.length > 0 && this._renderReligioNotices()}
+            {this.props.religionNotices.length > 0 ? this._renderReligioNotices() : <ActivityIndicator size="large" color="#0000ff" />}
           </ScrollView>
         )
     }

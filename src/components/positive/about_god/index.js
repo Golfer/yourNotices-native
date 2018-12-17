@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { ScrollView, TouchableWithoutFeedback, Linking } from 'react-native'
+import { ScrollView, TouchableWithoutFeedback, Linking, ActivityIndicator } from 'react-native'
 import { View, Text, ListItem } from 'react-native-elements';
 import IconEntypo from 'react-native-vector-icons/Entypo'
 import { getAboutGod } from '../../../actions'
@@ -75,7 +75,7 @@ class AboutGod extends Component {
   render() {
     return(
       <ScrollView>
-        {this.props.aboutGod.length > 0 && this._renderlistAboutGod()}
+        {this.props.aboutGod.length > 0 ? this._renderlistAboutGod() : <ActivityIndicator size="large" color="#0000ff" />}
       </ScrollView>
     )
   }
